@@ -79,7 +79,7 @@ fmt.Println(variables1,variables2,variables3,variables4,variables5,variables6,va
 ###### 5. 简短声明,多次赋值
 
 ```go
-variables4,variables5,variables6,variables7 := 1,"我是波哥",3.14,true
+variables4,variables5,variables6,variables7 := 1,"我是小杨",3.14,true
 ```
 
 ###### 6. 申请多个全局变量,在函数体外部
@@ -120,4 +120,193 @@ index = index
 ###### 5. 变量访问控制
 `大写字母`开头的变量是可导出的，即其它包可以读取的，是公有变量（相当于传统编程语言中`class`的`public`权限修饰符）；
 `小写字母`开头的就是不可导出的，是私有变量，仅本包可以使用（相当于传统编程语言中`class`的`private`权限修饰符）。
+
+___
+
+### 常量
+
+##### 一、常量引入
+
+当程序中需要引入一个在整个程序运行期，数据不发生改变时，使用常量
+
+##### 二、常量概述（什么是常量）
+
+就是在程序运行期不可以改变的变量
+
+##### 三、Go 语言预定义常量
+
+```go
+true
+false
+iota
+```
+
+##### 四、常量的作用与应用场景
+
+###### 1. 作用
+
+全局唯一，编译期就已经确定的值，提高程序执行效率
+
+###### 2. 应用场景
+
+当程序中需要引入一个在整个程序运行期，数据不发生改变时，使用常量。
+
+另一个就是枚举数据时使用，如下：
+```go 
+const (
+   Monday = iota
+   Tuesday
+   Wednesday
+   Thursday
+   Friday
+   Saturday
+   Sunday
+)
+```
+
+##### 五、申请常量的几个方法
+
+###### 1. const constVariables 变量类型 = 变量值
+
+```go
+const constVariables1 float64 = 3.1415926 
+```
+
+###### 2. 一次申明多个值
+
+```go 
+const constVariables2,constVariables3 = 100,"小杨"
+```
+
+###### 3. const （…）
+
+```go 
+const (
+   iotaVariables1 = iota  //0
+   iotaVariables2 = iota  //1
+   iotaVariables3 = iota  //2
+)
+```
+
+###### 4. 单独赋值
+
+```go 
+const iotaVariables4 = iota //0
+```
+
+###### 5. const 指定第一个iota,其余自动递增
+
+```go 
+const (
+   iotaVariables5 = iota //0
+   iotaVariables6      //1
+   iotaVariables7      //2
+)
+```
+
+###### 6. 枚举一周的日期
+
+```go 
+const (
+   Monday = iota
+   Tuesday
+   Wednesday
+   Thursday
+   Friday
+   Saturday
+   Sunday
+)
+```
+
+###### 7. 同一行定义
+
+```go 
+const(
+   iotaVariables8,iotaVariables9,iotaVariables10 = iota,iota,iota
+)
+```
+
+###### 8. const中iota与iota之间跳过
+
+```go 
+const (
+   iotaVariables11 = iota //0
+   iotaVariables12 = "Bobo" //Bobo
+   iotaVariables13 = iota //2
+)
+```
+
+##### 六、注意事项
+
+> 1.通过const关键字来申请
+> 
+> 2.常量是指编译期间就明确知道的值并且不可改变
+> 
+> 3.iota特殊，iota在每个const出现时被重置为0
+
+
+___
+
+### 数值类型
+
+##### 一、数值引入
+
+我们要存储一个人的年龄，就需要用到数值类型
+
+##### 二、数值类型概述
+
+用于定义整数类型变量的标识符
+
+##### 三、作用与应用场景
+
+在计算机当中存储数值类型
+
+##### 四、申请整型变量的方法
+
+```go
+var intVariables1 = 100 //int
+intVariables2 := 200 //int
+var intVariables3 int32 //int32
+intVariables := 126 //int
+
+//类型转换
+intVariables3 = int32(intVariables)
+
+//指定类型
+var intVariables4 int64 = 123456789
+fmt.Printf("intVariables1=%T,intVariables2=%T,intVariables3=%T\n",intVariables1,intVariables2,intVariables3)
+
+//引入unsafe包，打印占据的空间大小，即字节大小
+fmt.Println(unsafe.Sizeof(intVariables4))
+```
+
+##### 五、不同数值类型与占用的空间
+
+###### 1. 有符号位
+
+```go  
+int8 数据范围：-2^7到2^7-1
+int16 数据范围：-2^15到2^15-1
+int32 数据范围：-2^31到2^31-1
+int64 数据范围：-2^63到2^63-1
+```
+
+###### 2. 无符号位
+
+```go 
+uint8 数据范围：0到2^8-1
+uint16 数据范围：0到2^16-1
+uint32 数据范围：0到2^32-1
+uint64 数据范围：0到2^64-1
+```
+
+##### 六、注意事项
+
+> 1. 默认数据类型为int
+> 2. int32,int64由于占用空间大小不一样，被认为是不同的类型，所有不能相互赋值
+> 3. 不同类型的转换
+> 4. 占用字节 unsafe.Sizeof(intVariables)
+> 5. 注意使用时数据可能溢出与损失的问题
+
+___
 
