@@ -665,3 +665,517 @@ fmt.Printf("pointerVariables的值=%v,地址=%v\n",pointerVariables,&pointerVari
 > 9.指针也可以指向另一个指针，并且可以进行任意深度的嵌套，导致你可以有多级的间接引用，但在大多数情况这会使你的代码结构不清晰
 > 
 > 10.当一个指针被定义后没有分配到任何变量时，它的值为 nil。对一个空指针的反向引用是不合法的，并且会使程序崩溃
+
+___
+
+### 数组
+
+##### 一、数组概述
+
+数组是具有相同类型的一组长度固定的数据项序列。这种类型可以是整型、字符串或者自定义类型。数组长度必须是一个常量表达式，并且必须是一个非负整数。数组长度也是数组类型的一部分，所以`[5]int`和`[10]int`是属于不同类型的。
+
+如果我们想让数组元素类型为任意类型的话可以使用空接口作为类型，当使用值时我们必须先做一个类型判断 。
+
+数组元素可以通过 索引（位置）来读取（或者修改），索引从 0 开始，第一个元素索引为 0，第二个索引为 1，以此类推。（数组以 0 开始在所有类 C 语言中是相似的）。元素的数目，也称为长度或者数组大小必须是固定的并且在声明该数组时就给出（编译时需要知道数组长度以便分配内存）。
+
+> 1.数组是长度固定的数据类型
+> 
+> 2.数据元素的类型相同
+
+##### 二、作用及应用场景
+
+`作用`
+组在内存当中是连续的存储空间，可以有效的提升cpu的执行效率。
+
+`应用场景`
+存储多个相同类型的数据时，可以使用数组
+
+##### 三、数组的定义
+
+###### 一维数组的定义方式(1)
+
+```go
+//数组的定义方式1
+var arrayVariables [10]int
+arrayVariables[0] = 100
+arrayVariables[3] = 200
+//arrayVariables[10] = 100
+fmt.Println(arrayVariables)
+```
+
+###### 一维数组的定义方式(2)定义并初始化
+
+```go 
+var arrayVariables2 [5]int = [5]int{1,2,3,4,5}
+//在这种情况左边类型可简写
+var arrayVariables3 = [5]int{1,2,3,4,5}
+```
+
+###### 数组内存分析
+
+```go 
+//遍历数组
+var arrayVariables2 [5]int = [5]int{1,2,3,4,5}
+var length = len(arrayVariables2)
+for i :=0;i<length;i++ {
+   fmt.Printf("arrayVariables2[%d]=%d,地址=%p\n",i,arrayVariables2[i],&arrayVariables2[i])
+}
+
+/*
+数组在内存当中是连续的存储空间
+数组的元素(下标)      元素值    元素的地址
+0              1        0xc00006a060
+1              2        0xc00006a068
+2              3         0xc00006a070
+3              4          0xc00006a078
+4              5          0xc00006a080
+
+*/
+```
+
+###### 一维数组定义方式(3) arrayVariables := […]int{1,2,3,4}
+
+```go  
+arrayVariables3 := [...]int{1,2,3,4,5}
+fmt.Println(arrayVariables3,len(arrayVariables3))
+```
+
+###### 一维数组定义方式(4)，指定索引下标
+
+```go  
+arrayVariables4 := [...]int{100:200,300:500}
+```
+
+###### 二维数组,两个维度
+
+```go 
+var arrayVariables8 [4][2]int
+fmt.Println(arrayVariables8)
+
+arrayVariables9 := [4][2]int{{10,11},{3,5},{2,3},{100,88}}
+fmt.Println(arrayVariables9)
+
+arrayVariables10 := [4][2]int{1:{100,90},2:{8,9}}
+fmt.Println(arrayVariables10)
+```
+
+###### 多维数组，多个维度
+
+```go 
+var arrayVariables11 [4][3][2]int = [4][3][2]int{}
+fmt.Println(arrayVariables11)
+```
+
+##### 四、数组的遍历
+
+###### 数组遍历方式一，通过for i :=0;i<length;i++ {} 形式
+
+```go 
+arrayVariables6 := [3]string{"小杨","coderyang","golang"}
+arrayVariables7 := arrayVariables6
+//for .. rage
+for key,value := range arrayVariables6 {
+   fmt.Printf("arrayVariables6[%d]=%v,地址=%p\n",key,value,&arrayVariables6[key])
+}
+for key,value := range arrayVariables7 {
+   fmt.Printf("arrayVariables7[%d]=%v,地址=%p\n",key,value,&arrayVariables6[key])
+}
+```
+
+###### 数组遍历方式二，使用 for .. range形式
+
+```go 
+arrayVariables6 := [3]string{"小杨","coderyang","golang"}
+arrayVariables7 := arrayVariables6
+//for .. rage
+for key,value := range arrayVariables6 {
+   fmt.Printf("arrayVariables6[%d]=%v,地址=%p\n",key,value,&arrayVariables6[key])
+}
+```
+
+##### 五、数组注意事项
+
+> 数组是值类型，这一点对于有c语言编程经验的同学来说需要特别的注意。
+> 
+> len()获取长度
+> 
+> 数组的长度是数组类型的组成部分,比如以下下数组为两种不同的类型
+
+```go 
+arrayVariables[10]int arrayVariables[11]int 
+```
+
+> 数组在内存当中是连续的存储空间
+
+```go 
+数组的元素(下标)          元素值            元素的地址
+    0                    1            0xc00006a060
+    1                    2            0xc00006a068
+    2                    3            0xc00006a070
+    3                    4            0xc00006a078
+    4                    5            0xc00006a080
+```
+
+> 数组做为参数以引用形式传递函数，意义重大，当传递较大的数组时可以有效的提升cpu执行效率
+
+```go 
+func changeArrByPointer(arr *[10]int)  {
+    (*arr)[0] = 100
+}
+```
+
+> 数组做为值类型来传递函数,调用时是值拷贝，如果较大的数组传递对cpu的效能消耗是极其大的
+
+```go 
+func changeArr(arr [10]int) {
+    arr[0] = 100
+} 
+```
+
+___
+
+### 切片
+
+##### 一、切片概述
+
+> 1.一种数据结构，便于使用与管理我们的数据集合。
+> 
+> 2.按需自动增长，动态数组（通过append来完成）
+> 
+> 3.底层指向的是数组
+> 
+> 4.内存当中是连续的存储空间，可以有效的提升cpu的执行效率。
+> 
+> 5.引用类型
+
+##### 二、切片组成
+
+> 指向底层数组的指针
+> 
+> 切片元素的长度，通过len()获取
+> 
+> 容量,通过cap()获取
+
+##### 三、切片的作用与应用场景
+
+`作用`
+在函数当中传递切片时，当数据类型数据较大时，使用切片可以有效减少内存占用，提高程序执行效率
+
+`应用场景`
+从数据库表中读取商品信息时，用到map切片，每一个map看成一个整体
+
+##### 四、切片的定义
+
+> 定义一个数组,让切片去引用,这种方式，数组可见
+
+```go  
+arrayVariables := [...]int{12, 21, 23, 55, 98, 2}
+
+//定义一个切片去引用数组，这种情况默认长度和容量一致
+var sliceVariables []int
+sliceVariables = arrayVariables[:]
+```
+
+通过以上代码，分析切片的底层情况
+
+分别打印数组的地址与切片的地址来分析
+
+```go  
+//切片的定义
+var sliceVariables []int
+//定义一个数组
+arrayVariables := [...]int{12,21,23,55,98,2}
+for i :=0;i<len(arrayVariables);i++ {
+   fmt.Printf("arrayVariables[%d]=%d,地址=%p\n",i,arrayVariables[i],&arrayVariables[i])
+}
+
+//切片去引用数组
+sliceVariables = arrayVariables[:]
+for i:=0;i<len(sliceVariables);i++ {
+   fmt.Printf("sliceVariables[%d]=%d,地址=%p\n",i, sliceVariables[i],&sliceVariables[i])
+}
+
+
+var sliceVariables2 []int
+sliceVariables2 = arrayVariables[1:3]
+//12,21,23,55,98,2
+//[21 23]
+fmt.Println(sliceVariables2)
+//切片指向的是底层的数组
+for i :=0;i<len(sliceVariables2);i++ {
+   fmt.Printf("sliceVariables2[%d]=%d,地址=%p\n",i, sliceVariables2[i],&sliceVariables2[i])
+}
+sliceVariables2[0] = 100
+
+fmt.Println(arrayVariables)
+fmt.Println(sliceVariables2)
+```
+[![sRVSjx.jpg](https://s3.ax1x.com/2021/01/19/sRVSjx.jpg)](https://imgchr.com/i/sRVSjx)
+
+
+> 通过make来创建切片,这种方式可以指定切片的大小和容量，未赋值，有默认值 ，这种方式切片对应的数组不可见，由make来维护
+
+```go  
+//创建一个初始元素个数为 5 的数组切片，元素初始值为 0，并预留 6 个元素的存储空间
+var sliceVariables2 []int = make([]int, 5, 6)
+
+分析通过make方式定义切片的内存情况
+
+var sliceVariables3 []int = make([]int,5,6)
+fmt.Printf("sliceVariables3的长度=%d,容量=%d,\n切片指向的底层数组的地址=%p,切片自己的地址=%p\n",len(sliceVariables3),cap(sliceVariables3),sliceVariables3,&sliceVariables3)
+```
+
+> 通过make来创建切片的内存情况
+
+[![sRVkUe.jpg](https://s3.ax1x.com/2021/01/19/sRVkUe.jpg)](https://imgchr.com/i/sRVkUe)
+
+##### 五、切片的遍历
+
+###### 1. 通过for i:=0;i<len(sliceVariables);i++ {}形式遍历
+
+```go 
+sliceVariables = arrayVariables[:]
+for i:=0;i<len(sliceVariables);i++ {
+   fmt.Printf("sliceVariables[%d]=%d,地址=%p\n",i, sliceVariables[i],&sliceVariables[i])
+}
+```
+
+###### 2. 通过for..range形式遍历
+
+```go  
+for key,value := range sliceVariables {
+   fmt.Println(key,value)
+}
+```
+
+##### 六、切片的追加append
+
+> 1.创建一个初始元素个数为 5 的数组切片，元素初始值为 0，并`预留 6 个元素`的存储空间
+
+```go 
+var sliceVariables3 []int = make([]int,5,6)
+
+var sliceVariables3 []int = make([]int,5,6)
+fmt.Printf("sliceVariables3的长度=%d,容量=%d,\n切片指向的底层数组的地址=%p,切片自己的地址=%p\n",len(sliceVariables3),cap(sliceVariables3),sliceVariables3,&sliceVariables3)
+```
+
+> 2.第一次追加切片的容量`达到预设的最大容量`
+
+```go 
+sliceVariables3 = append(sliceVariables3,7)
+fmt.Printf("第一次追加sliceVariables3的长度=%d,容量=%d,\n切片指向的底层数组的地址=%p,切片自己的地址=%p\n",len(sliceVariables3),cap(sliceVariables3),sliceVariables3,&sliceVariables3)
+```
+
+> 3.第一次追加切片的容量超出了预设的最大值，go语言会新申请一块内存将原始数据拷贝到新的内存当中，切片指向新的内存空间
+
+```go 
+sliceVariables3 = append(sliceVariables3,8)
+fmt.Printf("第二次追加sliceVariables3的长度=%d,容量=%d,\n切片指向的底层数组的地址=%p,切片自己的地址=%p\n",len(sliceVariables3),cap(sliceVariables3),sliceVariables3,&sliceVariables3)
+```
+
+##### 七、切片的拷贝
+
+> 1.定义源切片
+
+```go 
+sliceVariables4 := []int{1,2,3,4,5}
+```
+
+> 2.定义目标切片
+
+```go 
+sliceVariables5 := make([]int,10)
+```
+
+> 3.目标切片，源切片，拷贝的数量以两个切片中最小切片的长度为准，copy(目标切片，源切片)
+
+```go
+copy(sliceVariables5,sliceVariables4)
+fmt.Println(sliceVariables4)
+fmt.Println(sliceVariables5)
+```
+
+##### 八、切片做为函数参数
+
+###### 切片是引用类型
+
+切片做为参数传递给函数的意义重大，同数组，当传递较大的数组切片时可以有效的提升cpu执行效率
+
+```go 
+func changeSlice(slice []int) {
+   slice[0] = 100
+}
+
+//切片是引用类型
+fmt.Println(sliceVariables5)
+changeSlice(sliceVariables5)
+fmt.Println(sliceVariables5)
+```
+
+##### 九、切片注意事项
+
+> 1.切片是引用类型
+> 
+> 2.切片做为参数传递给函数的意义重大，同数组，当传递较大的数组切片时可以有效的提升cpu执行效率
+> 
+> 3.`new` 用于各种类型的内存分配 返回的是指针,`var variables = new(T)` 返回的是`T`，指针类型，即返回的是一个地址，默认是当前类型的零值，它返回了一个指针，指向新分配的类型` T `的零值。也就是说`new `返回指针。
+> 
+> 4.`make` 用来分配内存主要用来分配引用类型，比如`channel` ,`map` ,`slice`，返回一个有初始值 (非零) 的 `T `类型，不是`T`类型
+
+___
+
+### map
+
+##### 一、map概述
+
+`Map` 是一种无序的`key-value`键值对组成的集合。
+通过` key `可以快速检索到我们需要的数据，这里的`key` 类似于索引，指向对应的数据值。
+
+`Map` 是一种集合，所以我们可以像迭代数组和切片那样迭代它。不过，`Map` 是无序的，我们无法决定它的返回顺序，这是因为 `Map` 是使用 `hash` 表来实现的。
+
+`map`无序是有原因的：主要是通过散列函数对`key`计算一个唯一值与值进行映射
+
+通过散列函数对我们的map
+
+0xc0001
+
+0xc0002
+
+0xc0003
+
+
+> 1.无序的key-value键值对,每次循环出来的数据的顺序是不一致的，又称为集合
+> 
+> 2.引用类型
+> 
+> 3.类似perl当中的hash，python当中的字典，go当中被称为map
+> 
+> 4.通过key可快速找到value
+
+##### 二、map的定义
+
+> 1.使用方式 一般定义 map 的方法是：var map[key的类型]value的类型
+
+```go
+var mapVariables1 map[string]string
+    //在使用map前，需要先make , make的作用就是给map分配数据空间,之后才可以进行引用
+    mapVariables1 = make(map[string]string, 2)
+    //需要特别说明的是，map中的键是唯一的，不可以重复，值可以重复
+    mapVariables1["Monday"] = "周一"
+    mapVariables1["Tuesday"] = "周二"
+    mapVariables1["Wednesday"] = "周三"
+    mapVariables1["Thursday"] = "周四"
+```
+
+> 2.使用方式 在申明同同时赋值
+
+```go 
+// 更常用的方法是使用map字面量。map的初始长度会根据初始化时指定的键值对的数量来确定。
+    var mapVariables3 = map[string]int{
+        "Monday": 1, "Tuesday": 2, "Wednesday": 3,
+        "Thursday": 4, "Friday": 5, "Saturday": 6, "sunday": 7,
+    }
+```
+
+> 3.通过短冒号（简短声明）直接make，当只需要声明一个 map 的时候，使用 make 的形式
+
+```go 
+mapVariables2 := make(map[string]string)
+
+mapVariables2["Monday"] = "周一"
+mapVariables2["Tuesday"] = "周二"
+mapVariables2["Wednesday"] = "周三"
+```
+
+> 4.结构体和c类似 定义一个结构体，做为map的值
+
+```go 
+type course struct {
+    courseName string //课程名称
+    courseTime float32 //课程时长 单位分钟
+    courseTeacher string //课程讲师
+}
+//定义一个结构体 变量并赋值
+couser1 := course {
+    //不指定结构体字段名的方式，严格按照定义结构体时的顺序
+    "go语言体系课",300.3,"波哥",
+}
+
+courser2 := course {
+    courseTeacher:"胡哥",
+    courseTime:100.2,
+    courseName:"如何变帅",
+}
+
+//定义map，key为string,value为结构体
+courser := make(map[string]course)
+courser["go"] = couser1
+courser["美容"] = courser2
+fmt.Println(courser)
+```
+
+> 5.map切片 map+切片
+
+```go 
+//interface{} 可以把它当作万能类型
+
+var mapVariables6 []map[string]interface{}
+mapVariables6 = make([]map[string]interface{},2)
+mapVariables6[0] = make(map[string]interface{},2)
+mapVariables6[0]["name"] = "小杨"
+mapVariables6[0]["age"] = 18
+
+mapVariables6[1] = make(map[string]interface{},2)
+mapVariables6[1]["name"] = "coderyang"
+mapVariables6[1]["age"] = 16
+```
+
+##### 三、map的遍历
+
+```go  
+for i :=0;i<len(sortKeys);i++ {
+    fmt.Printf("mapVariables3[%s]=%d\n",sortKeys[i],mapVariables3[sortKeys[i]])
+}
+
+for key,value := range mapVariables3 {
+    fmt.Println(key,value)
+}
+```
+
+##### 四、map注意事项
+
+> map如何判断一个key是否存在
+
+```go 
+value,ok := courser["go"]
+    if ok {
+        fmt.Println(value)
+    } else {
+        fmt.Println("no value")
+    }
+    //来语言特有的语法格式 
+    if value,ok := courser["go"];ok {
+        fmt.Println(value)
+    }
+```
+
+> 只申明没有make,报错panic: assignment to entry in nil map
+
+```go 
+//var mapVariables6 map[string]string
+    //mapVariables6["hello"] = "小杨"
+    //nil null 空
+```
+
+> map是一个引用,函数传参，遵循引用类型规则
+
+
+```go
+map是无序的键值对类型，如何排序?
+
+1.定义切片存储所有的key
+2.通过排序算法（排序算法使用内置或者冒泡，选择等排序算法均可）对key进行排序
+3.按照排序后的key打印map
+```
+
+
