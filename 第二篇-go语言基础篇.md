@@ -310,3 +310,269 @@ uint64 数据范围：0到2^64-1
 
 ___
 
+### 浮点类型
+
+##### 一、浮点引入
+
+当我们需要存储带有小数点的数据类型时需要使用浮点类型
+
+##### 二、浮点概述
+
+用于存储带有小数位的数据类型
+
+##### 三、作用与应用场景
+
+**作用**
+
+当我们需要存储带有小数点的数据类型时需要使用浮点类型
+
+**应用场景**
+
+比如在微信小程序支付时，这里支付的金额，可能是1888.856元，这个时候就需要使用浮点类型
+
+##### 四、主要类型
+
+> 单精度 float32
+> 双精度 float64
+
+##### 五、申请变量的方法
+
+###### 1. 十进制的形式来展示
+
+```go 
+var floatVariables1 float32 = 3.1415926
+floatVariables2 := .1416926 //0.1416926
+fmt.Printf("floatVariables1的类型=%T,占用的字节大小=%d\n",floatVariables1,unsafe.Sizeof(floatVariables1))
+fmt.Printf("floatVariables2的类型=%T,占用的字节大小=%d\n",floatVariables2,unsafe.Sizeof(floatVariables2))
+```
+
+###### 2. 科学计数法来展示
+
+```go 
+floatVariables3 := 3.1415926e2 //3.1415926乘以10的2次方
+floatVariables4 := 3.1415926e-2 //3.1415926除以10的2次方
+fmt.Println(floatVariables3,floatVariables4)
+```
+
+###### 3. 不同精度的浮点类型的转换
+
+```go 
+var floatVariables5 float32 = 3.14
+var floatVariables6 float64 = 3.14
+floatVariables6 = float64(floatVariables5)
+floatVariables6 = floatVariables6
+```
+
+##### 六、复数
+
+> 实数+虚数i
+> complex64(32 位实数 + 32 位虚数+i虚数单位)
+> complex128（默认）(64 位实数 + 64 位虚数+i虚数单位)
+
+
+###### 申请方式
+
+```go 
+var complexVariables1 complex64
+complexVariables1 = 3.14+12i
+complexVariables2 := complex(3.14,12)
+
+fmt.Printf("complexVariables1的类型=%T,值=%v\n",complexVariables1,complexVariables1)
+fmt.Printf("complexVariables2的类型=%T,值=%v\n",complexVariables2,complexVariables2)
+
+//打印复数的实数部分与虚数部分
+fmt.Println(real(complexVariables1),imag(complexVariables1))
+```
+
+##### 七、注意事项
+
+> 1.默认数据类型为float64
+> 
+> 2.float32,float64由于占用空间大小不一样，被认为是不同的类型
+> 
+> 3.不同类型的转换
+> 
+> 4.单精度，双精度类型转换的精度损失与溢出
+
+___
+
+### 字符
+
+##### 一、什么是字符
+
+字符是电子计算机中字母、数字、符号的统称，是数据结构中最小的数据存取单位，通常由8个二进制位(一个字节)来表示一个字符。
+
+##### 二、作用与应用场景
+
+用于存储单个字符
+
+##### 三、字符表示类型
+
+> byte(uint8) byte 类型是 uint8 的别名
+>
+> rune 类型，代表一个 UTF-8 字符，当需要处理中文、日文或者其他复合字符时，则需要用到 rune 类型，rune 类型是 int32 类型的别名
+
+##### 四、申请变量的方法
+
+```go 
+var charVariables1 byte = '0'
+charVariables2 := '波'
+//var charVariables3 byte = '波'
+
+fmt.Printf("charVariables1 = %d,charVariables2=%d\n",charVariables1,charVariables2)
+fmt.Printf("charVariables2=%c，charVariables2=%T\n",charVariables2,charVariables2)
+//fmt.Printf("charVariables3=%c，charVariables3=%T\n",charVariables3,charVariables3)
+variables := 'a' //对应的编码值
+fmt.Printf("加和=%d,a的编码值=%d\n",100+variables,variables)
+```
+
+##### 五、注意事项
+
+> 1.单引号括起来
+> 
+> 2.存储：字符-》ascii码值-》二进制
+> 
+> 3.读取：二进制-》ascii码值-》字符
+> 
+> 4.一个字符占一个字节，一个中文占3个字节
+> 
+> 5.字符可以与整数进行算术运算(转成ascii码值再计算)
+
+___
+
+
+### 字符串
+
+##### 一、字符串概述
+
+字符串是的类型标识为string, 由数字、字母、下划线组成的一串字符。 在编程语言中用于表示文本的数据类型。
+
+##### 二、申请变量的方法
+
+###### 1. 申明并赋值
+
+```go 
+var stringVariables1 string
+stringVariables1 = "hello 小杨\n"
+```
+
+###### 2. 通过反引号定义，原样输出
+
+```go 
+var stringVariables2 = `
+package main 
+import (
+   "fmt"
+   "unsafe"
+)
+
+func main() {
+   /*
+   float32 4个字节
+   float64 8个字节
+    */
+   。。。。。。。
+   fmt.Println(real(complexVariables1),imag(complexVariables1))
+}
+   `
+```
+
+###### 3. 获取字符串长度
+
+```go 
+var stringVariables3 = "hello imooc,我是小杨"
+stringVariables3Len := len(stringVariables3)
+```
+
+##### 三、字符串遍历
+
+###### 1. 通过 for index := 0; index < stringVariables3Len;index++ {} 形式来遍历
+
+```go 
+for index := 0; index < stringVariables3Len;index++ {
+   //这种情况如果是中文，则会有编码问题
+   fmt.Printf("%s-编码值=%d,值=%c,类型=%T\n",stringVariables3,stringVariables3[index],stringVariables3[index],stringVariables3[index])
+}
+```
+
+###### 2. 通过for..range 形式来遍历
+
+```go 
+// 通过range，在这种情况下中文就不会有问题，按照rune类型来打印
+for index, val := range stringVariables3 {
+   fmt.Printf("通过for index ... %s--索引:%d--字符值:%c--字符值类型;%T\n", stringVariables5, index, val, val) //val 的类型为 rune，即int32
+}
+```
+
+##### 四、参照字符类型
+
+> 1.byte(uint8) byte 类型是 uint8 的别名
+> 2.rune 类型，代表一个 UTF-8 字符，当需要处理中文、日文或者其他复合字符时，则需要用到 rune 类型，rune 类型是 int32 类型的别名
+
+##### 五、注意事项
+
+> 1.双引号括起来
+> 
+> 2.`` 反引号原样输出
+> 
+> 3.字符串初始化之后不允许重新赋值
+> 
+> 4.可以以字符数组下标的形式来读取，但不能赋值
+> 
+> 5.len获取字符串长度
+> 
+> 6.字符串相加即是拼接
+
+##### 六、面试
+
+> 1.go语言中如何遍历字符串中有中文的情况？
+> 
+> for循环遍历值的类型为uint8
+> 
+> 2.for循环的遍历与for….range的区别
+> 
+> for...range遍历值的类型为int32
+
+___
+
+### 布尔
+
+##### 一、布尔类型，要么为真，要么为假
+
+> 真 true
+> 假 false
+
+
+##### 二、作用与应用场景
+
+`作用`
+
+在计算机当中，为了表示某个条件是否成立，需要使用到布尔类型
+
+`应用场景`
+
+在条件判断当中，条件成立或条件不成立
+
+##### 三、申请变量的方法
+
+```go 
+var boolVaraibles1 bool
+boolVaraibles1 = true
+boolVaraibles2 := (true == false)
+
+if 3 == 4 {
+   fmt.Println("false")
+} else {
+   fmt.Println("true")
+}
+
+fmt.Println(!true,!false,!!true)
+```
+
+##### 四、注意事项
+
+> 1.只有true和false
+> 2.其他类型不可以转换成布尔
+
+___
+
