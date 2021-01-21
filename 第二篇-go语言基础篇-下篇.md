@@ -8,6 +8,14 @@
 
 [方法](#方法)
 
+[面向对象概述](#面向对象概述)
+
+[面向对象封装](#面向对象封装)
+
+[面向对象继承](#面向对象继承)
+
+[面向对象多态](#面向对象多态)
+
 ### 流程控制
 
 ##### 一、流程控制是什么
@@ -1040,3 +1048,738 @@ fmt.Println(radius.getCircleAround())
 > 函数调用：函数名（参数列表）
 > 
 > 首字母大小写，遵循包的规则
+
+___
+
+### 面向对象概述
+
+##### 一、什么是面向对象
+
+###### 权威的定义
+
+面向对象`(Object Oriented,OO)`是软件开发方法。
+
+泛指现实中一切事物，每种事物都具备自己的属性和行为。面向对象思想就是在计算机程序设计过程中，参照现实中事物，将事物的属性特征、行为特征抽象出来，描述成计算 机事件的设计思想。
+
+###### 通俗的定义
+
+月饼的比喻：
+
+几个概念: `类` `对象` `属性` `方法`
+
+月饼有各种各样的形状（模板，软件工程当中的”类”），中秋节商场里买月饼，商场里有各个不同形状的月饼(软件工程当中的”对象”),月饼的重量，颜色，形状，尺寸等这些类比软件工程当中的”属性”,月饼的生产方法，将面粉放到不同模板当中就可做出各种不同形状的月饼(软件工程当中的”方法”)
+
+###### 二、面向对象在实际工作中的作用
+
+> 1.有利于团队合作,分工、分模块开发
+> 
+> 2.提高工作效率
+
+###### 三、面向对象的几个概念
+
+###### 1. 类
+
+> 定义:具有同种属性的对象称为类，是个抽象的概念。
+> 
+> 它定义了所包含的全体对象的公共特征和功能。
+> 
+> 举例：“人”就是一类，比如小杨、coderyang 等等这些都是对象，类就相当于一个模具，对象就是类的一个实例化，小杨就是人的一个实例化！我们在做程序的时候，经常要将一个变量实例化，就是这个原理！
+>
+> 一般情况下，在调用类时不直接调用类，而是通过类的对象来操作，比如我们问小杨的时候，不会喊“人，你干嘛呢！” 相反我们会问“小杨，你在干嘛呢！”
+> 
+
+###### 2. 对象
+
+> 定义：某个抽象类的实例化
+
+###### 3. 属性
+
+> 定义：属性用来描述具体某个对象的特征，属性属于对象`静态`的一面，用来形容对象的一些特性
+> 
+> 举例：小杨身高181CM，体重80KG，这里身高、体重都是属性。
+
+###### 4. 行为或方法
+
+> 定义：方法属于对象动态的一面.
+> 
+> 举例：猴子会跑，会学人说话，跑、学人说话这些行为就是对象的方法！表现为动态的一面
+
+##### 5. 面向对象三大特征
+
+**1). 封装**
+
+> 隐藏隐私数据，对外暴露公开的接口，增强安全，简化编程
+> 
+> 通过引入外部包小写字母开头的私有的结构体来实现封装,我们引入了`工厂方法`来实现
+> 
+> 通过引入外部包结构体中小写字母开头的私有字段来实现封装，我们引入`gettter`和`setter`来实现
+
+
+**2). 继承**
+
+> 子类继承父类，子类自动拥有父类的属性和方法
+> 
+> 这里我们通过封装一个公共的支付结构体，把它做为父类，同时实现4个不同支付平台的结构体，把这4个不同支付平台的结构体做为子类，来实现继承的功能
+> 
+> 详细的分析了在多个继承关系当中，如果有相同的数据字段，他们的访问顺序
+> 
+> 方法的继承与重载
+> 
+> 多重继承作业，实现多重继承当中接口的所有方法
+
+**3). 多态**
+
+> 同一种类型在不同场景下表现为不同的行为，我们举了生活中的饮用水，在不同的温度下水的三种形态，分别为冰，水，蒸汽
+> 
+> 多态的定义格式与实现方式
+> 
+> 结构体与自定义类型都可以实现接口中的方法
+> 
+> 接口的多重继承实现方式
+
+___
+
+### 面向对象封装
+
+##### 什么是封装
+
+> 隐藏隐私数据，对外暴露公开的接口，增强安全，简化编程
+
+封装就是隐藏对象的属性和实现细节，仅对外公开接口，控制对数据的读写操作，也就是将数据也就是对象属性与操作数据的方法进行有机的结合，形成“类”，封装的目的是为了增强安全性和简化编程，使用者不必了解具体的实现细节，而只是要通过外部接口，以特定的访问权限来使用类的成员
+
+封装，就是把客观事物封装成抽象的类，并且类可以把自己的数据和方法只让可信的类或者对象操作，对不可信的进行信息隐藏。一个类就是一个封装了数据以及操作这些数据的代码的逻辑实体。在一个对象内部，某些代码或某些数据可以是私有的，不能被外界访问。通过这种方式，对象对内部数据提供了不同级别的保护，以防止程序中无关的部分意外的改变或错误的使用了对象的私有部分。
+
+通过引入外部包小写字母开头的私有的结构体来实现封装,我们引入了工厂方法来实现
+
+通过引入外部包结构体中小写字母开头的私有字段来实现封装，我们引入`gettter`和`setter`来实现
+
+##### 封装的作用
+
+比如某位漂亮小姐姐可能年龄已经不小了，但是这位漂亮小姐姐会保养，可能已经30多岁了，看起来像个18岁的小姑娘，别人问她年龄时，她不愿意说，这是她的隐私。
+
+在软件工程当中，如果包中的结构体中某些变量，我们不希望外部实体直接访问，因为这些数据比较重要，也就是说对外部的包来说他是一个私有的，对数据起到保护的作用。
+
+##### 封装的使用
+
+###### 1. 外部包中的结构体首字母小写
+
+引入前面包的知识，定义一个`model`包，新建`userinfo.go`文件，这里我们将结构体`userInfo`首字母小写
+
+```go 
+package model
+
+//class UserInfo{
+//
+//}
+type userInfo struct {
+    Name string
+    Age int
+    Height float32
+    Eduschool string
+    Hobby []string
+    MoreInfo map[string]interface{}
+} 
+```
+
+在我们的`main.go`文件中执行如下代码即会报错
+
+```go 
+//这种情况下是无法调用的，首字母小写它是非导出的，即外部的包无法访问。
+boge := model.userInfo{
+    Name:      "波哥",
+    Age:       18,
+    Height:    181,
+    Eduschool: "北京邮电大学",
+    Hobby:     []string{"coding","运动"},
+    MoreInfo:  nil,
+}
+```
+
+那如果外部包想访问这个结构体，如何来操作，这里就需要引入软件编程设计模式中的工厂模式了，工厂就如同现实中的工厂用于生产产品，在软件工程当中，工厂模式就是用于生成对象。这里建立工厂函数`NewUserInfo`，习惯以`New`开头
+
+```go 
+//工厂模式：生成对象
+func NewUserInfo(name string,age int,height float32,eduschool string,hobby []string,moreinfo map[string]interface{}) *userInfo {
+    return &userInfo{
+        Name:      name,
+        Age:       age,
+        Height:    height,
+        Eduschool: eduschool,
+        Hobby:     hobby,
+        MoreInfo:  moreinfo,
+    }
+}
+```
+
+在我们的main.go文件中执行如下代码正确
+
+```go 
+//这种情况下即可以访问了。
+boge := model.NewUserInfo("小杨",18, 181,"北京邮电大学",[]string{"coding","运动"},nil)
+fmt.Printf("coderyang的信息=%v\n",boge)
+```
+
+###### 2. 外部包中的结构体字段首字母小写
+
+引入前面包的知识，定义一个`model`包，新建`product.go`文件，这里我们将结构体`Product`中的两个字段首字母小写
+
+```go 
+package model
+
+type Product struct {
+    productName string
+    productPrice float32
+}
+```
+
+这种情况下同样是无法调用的，首字母小写它是非导出的，即外部的包无法访问。
+
+如果包中的结构体中某些变量，我们不希望外部实体直接访问，也就是说对外部的包来说他是一个私有的， 可是我们又想获取或者设置对应的数据，如何操作？
+前面我们讲解方法接收者时有讲解过，我们可以从面向对象语言特性中得到启发，也就是面向对象中提供的 `getter` 和 `setter` 方法。对于 `setter` 方法使用 `Set` 前缀，对于` getter `方法只使用成员名，这样就形成了对我们数据的保护，称为对数据的封装。
+
+> 工作中的应用
+> 
+> 比如产品的价格，我们不希望外部数据直接进行修改，因为这些数据很重要，但是我们可以提供一个接口告知使用者，你想修改我商品的价格，可以，但是必须按我的规定来，比如商品的价格必须在某个范围之内，这些是在接口中事先封装好的，不在这个范围，则拒绝修改。
+> 
+
+我们增加如下方法：
+
+```go 
+//getter setter
+func (this *Product)SetProductName(_productName string )  {
+    this.productName = _productName
+}
+
+func (this *Product)GetProductName() string  {
+    return this.productName
+}
+
+func (this *Product)SetProductPrice(_productPrice float32)  {
+    this.productPrice = _productPrice
+}
+
+func (this *Product)GetProductPrice() float32  {
+    return this.productPrice
+}
+```
+
+在我们的main.go文件中执行如下代码正确
+
+```go 
+product := &model.Product{}
+product.SetProductName("慕课网go语言体系课")
+fmt.Println(product.GetProductName())
+```
+
+___
+
+### 面向对象继承
+
+##### 什么是继承
+
+继承是面向对象的基本特征之一，继承就是子类继承父类的特征和行为，使得子类对象（实例）自动就拥有了父类的属性和方法，
+
+当多个子类拥有父类相同的方法与属性时，就可以抽取共有特征和方法形成一个父级类，形成了父子类之间关系。
+
+继承机制可以很好的提高了代码复用率，比如在Java中的Object类，就是所有类的超类。
+
+继承，指可以让某个类型的对象获得另一个类型的对象的属性的方法。
+
+它支持按级分类的概念。继承是指这样一种能力：它可以使用现有类的所有功能，并在无需重新编写原来的类的情况下对这些功能进行扩展。 通过继承创建的新类称为“子类”或“派生类”，被继承的类称为“基类”、“父类”或“超类”。
+
+继承的过程，就是从一般到特殊的过程。要实现继承，可以通过 “继承”（`Inheritance`）和“组合”（`Composition`）来实现。继承概念的实现方式有二类：实现继承与接口继承。实现继承是指直接使用 基类的属性和方法而无需额外编码的能力；接口继承是指仅使用属性和方法的名称、但是子类必须提供实现的能力。
+
+在go语言当中继承：主要是通过类型组合的方式来实现：内嵌一个（或多个）包含想要的行为（字段和方法）的类型；多重继承可以通过内嵌多个类型实现
+
+##### 继承的作用
+
+支付是一个企业项目变现的重要手段，做为企业应用必不可少的功能，支付系统包括微信支付，支付宝，银联，京东等等，在开发中如何避免重复代码来实现类似的支付功能？由此引出继承
+
+##### 继承的使用
+
+###### 1. 结构体嵌套
+
+> 继承在go语言中主要通过在一个结构体中嵌套另一个结构体，那么这个结构体自动拥有另一个结构体的字段与方法，实现了继承
+
+引入前面包的知识，定义一个`mode`l包，新建`payment.go`文件，这里我们将结构体`PaymentArgs`
+
+```go
+package model
+
+import "fmt"
+//微信支付
+//支付宝
+//银联
+//银行卡
+type PaymentArgs struct {
+    AppID string
+    MchID string
+    Key string
+    CallbackUrl string
+}
+```
+
+同时在`model`包，新建`Alipay.go`文件，这里我们让结构体`Alipay` 继承 `PaymentArgs`
+
+```go 
+package model
+
+import "fmt"
+
+type Alipay struct {
+    PaymentArgs 
+    AlipayOpenID string
+    string
+}
+```
+
+这样`Alipay`结构体就自动拥有`PaymentArgs`的信息
+
+在我们的`main.go`文件中这样来实现结构体变量
+
+```go 
+alipay := &model.Alipay{
+        PaymentArgs:  model.PaymentArgs{
+            AppID:"alipay123",
+            MchID:"alipaymchid",
+            Key:"alipayfjkadsfjkasfjas",
+            CallbackUrl:"https://api.imooc.com/alipay",
+        },
+        AlipayOpenID: "alipayopenid",
+    }
+```
+
+当然如果想再为`微信支付`增加一个类似的结构体，也可以同时在`model`包，新建`payment_weixin.go`文件，这里我们让结构体`WeixinPay` 继承 `PaymentArgs`，访问方式同`Alipay`
+
+我们在`main.go`中来打印他们的信息
+
+```go 
+fmt.Println(alipay.PaymentArgs.AppID)
+fmt.Println(weixinpay.WeixinOpenID)
+```
+
+###### 2. 同一个结构体继承了多个不同的结构体
+
+> 多个不同结构体有相同字段时，如何使用?
+
+在`mode`l包，新建`payment_other.go`文件，这里我们将结构体`PaymentOther` ，结构体内容同`PaymentArgs`相同,`payment_other.go`的内容
+
+```go 
+package model
+
+//微信支付
+//支付宝
+//银联
+//银行卡
+type PaymentOther struct {
+    AppID string
+    MchID string
+    Key string
+    CallbackUrl string
+}
+```
+
+这里我们让`Alipay`这个结构体同时继承`PaymentArgs`和`PaymentOther`,`Alipay.go`的内容
+
+```go
+package model
+
+import "fmt"
+
+type Alipay struct {
+    PaymentArgs //匿名结构体
+    PaymentOther PaymentOther //有名结构体
+    AlipayOpenID string
+    string
+}
+```
+
+这里`Alipay`结构体想访问`AppID`字段就必须指定结构体名，这里有两个概念`匿名结构体`和`有名结构体`
+
+`匿名结构体` 在嵌套结构体时没有指定结构体变量名，例如上面`Alipay`结构体中的`PaymentArgs`
+`有名结构体` 在嵌套结构体时没有指定结构体变量名，例如上面`Alipay`结构体中的`PaymentOther`
+因为他们具有相同的字段，如果想访问`Alipay`结构体中的`AppID`就必须指定结构体变量名或者匿名结构体名
+
+在`main.g`o中，如下的访问
+
+```go 
+fmt.Println(alipay.PaymentOther.AppID)
+fmt.Println(alipay.PaymentArgs.AppID)
+```
+
+###### 3. 方法的继承与重载
+
+我们为`payment.go`文件中`PaymentArgs`结构体增加方法
+
+```go 
+func (this *PaymentArgs)Info() {
+    fmt.Printf("Info = %v\n",this)
+}
+```
+
+这样我们定义的`Alipay`结构体与`WeixinPay`结构体自动就继承了`PaymentArgs`的方法
+
+我们在`main.go`中调用
+
+```go 
+paymentArgs := model.PaymentArgs{
+    AppID:       "superAppid",
+    MchID:       "superMchid",
+    Key:         "superKey",
+    CallbackUrl: "https://api.imooc.com/super",
+}
+paymentArgs.Info()
+```
+
+同样的我们可以对继承的方法进行重定义
+
+在我们的`Alipay.go`中为`Alipay`结构体增加方法
+
+```go  
+func (this *Alipay)Info()  {
+    fmt.Printf("alipay = %v\n",this)
+}
+```
+
+此时`Alipay`结构体重写了`Info()`方法，在`main.go`中调用
+
+```go  
+alipay := &model.Alipay{
+    PaymentArgs:  model.PaymentArgs{
+        AppID:"alipay123",
+        MchID:"alipaymchid",
+        Key:"alipayfjkadsfjkasfjas",
+        CallbackUrl:"https://api.imooc.com/alipay",
+    },
+    AlipayOpenID: "alipayopenid",
+}
+alipay.Info()
+```
+
+##### 结构体继承访问流程
+
+> 这里以上面`Alipay`结构体当中访问`AppID`为例
+> 
+> 1.先判断`AppID`是否属于`Alipay`,如果有就访问
+> 
+> 2.如果没有，继续去找他继承的结构体`PaymentArgs`，如果有就访问
+> 
+> 3.如果没有继续去找`PaymentArgs`这个结构的所继承的结构体，如果有就访问，没有就报错,因为`PaymentArgs`结构体没有再继承别的结构体
+> 
+
+##### 结构体注意事项
+
+> 1.如果一个结构中继承了多个结构体，而这些多个结构体当中有相同的字段，那么我们就需要使用 结构体名来访问
+
+如上面我们所演示的访问Alipay结构体中的AppID就必须指定结构体变量名或者匿名结构体名
+
+> 2.一个内置类型可以做为结构体的匿名字段，这种方式只能在本包访问
+
+```go  
+//定义一个结构体，字段为一个内置string类型
+type StringStruct struct {
+    string
+}
+
+ss := StringStruct{"hello"}
+//这种方式只能在本包中访问
+fmt.Println(ss.string)
+```
+
+##### 继承有什么优点
+
+> 1.提高代码的复用率
+> 
+> 2.提高代码的扩展性与维护性
+
+
+___
+
+###  面向对象多态
+
+##### 什么是多态
+
+> 多态同一个行为具有多个不同表现形式。也就是说一个类实例（对象）的相同方法在不同场景下有不同表现形式。多态机制使内部结构不同的对象可以共享相同的外部接口。
+> 
+> 这意味着，虽然针对不同对象的具体操作不同，但通过一个公共的类，它们（那些操作）可以通过相同的方式予以调用。最大的优点就是说可以降低类型之间的耦合度，对吧
+> 
+
+在go语言当中多态：用接口实现：某个类型的实例可以赋给它所实现的任意接口类型的变量。类型和接口是松耦合的，并且多重继承可以通过实现多个接口实现。
+
+多态，是指一个类实例的相同方法在不同情形有不同表现形式。
+
+多态机制使具有不同内部结构的对象可以共享相同的外部接口。这意味着，虽然针对不同对象的具体操作不同，但通过一个公共的类，它们（那些操作）可以通过相同的方式予以调用。
+
+##### 多态的作用
+
+张三的儿子娶媳妇，通知李五去他家`喝喜酒`（这里就是一个`方法`），但是李五有事不能来，李五就让他的三个儿子其中一个代表他老爹李五去`喝喜酒`（这里就是一个`方法`），使用的是他们老爹的`喝喜酒`方法,就像他老爹本人一样。
+
+不必编写每一子类的功能调用，可以直接把不同子类当父类看，屏蔽子类间的差异，提高代码的通用率/复用率
+
+父类引用可以调用不同子类的功能，提高了代码的扩充性和可维护性
+
+##### 多态的使用
+
+###### 1. 定义接口与类型，让类型去实现接口中的方法
+
+> 1.定义接口时，方法不能实现
+> 
+> 2.一个类型如果实现了接口中的所有方法，我们就说这种类型实现接口，不仅仅结构体，也可以是内置类型
+> 
+> 3.自定义类型可以实现多个接口
+
+`定义格式`
+
+```go  
+type 接口名 interface {
+    方法名1（参数列表）（返回值）
+    方法名2（参数列表）（返回值）
+    方法名3（参数列表）（返回值）
+    。。。
+}
+通过自定义类型来实现接口中的所有方法
+//定义类型
+type T struct {
+}
+type TT string
+
+//方法接收者
+func (this *T)方法名1()（返回值）{}
+func (this *T)方法名2()（返回值）{}
+func (this *T)方法名3()（返回值）{} 
+```
+
+在`main.go`中定义一个结构体一个接口`pay`，增加两个方法`topay()`，`info()`
+
+```go 
+type pay interface {
+    topay()
+    info()
+}
+```
+
+同时我们来定义一个结构体`payment`
+
+```go 
+type payment struct {
+    paymentmethod string
+}
+```
+
+让这个结构体去实现接口`pay`中的所有方法
+
+```go 
+func (this *payment)topay()  {
+    fmt.Println("topay:",this.paymentmethod)
+}
+
+func (this *payment)info()  {
+    fmt.Println("info:",this.paymentmethod)
+}
+```
+
+我们来定义`payment`类型的变量`_payment`
+
+```go  
+_payment := &payment{paymentmethod:"alipay"}
+```
+
+这要我们就可以通过这个变量去调用接口中的方法了，因为我们的结构体`payment`实现了接口中所有的方法
+
+```go 
+_payment.info()
+_payment.topay()
+```
+
+> 注意点
+> 
+> 一个变量实现了接口当中所有方法，接口就可以指向这个变量
+> 
+> 接口内的方法不能实现，体现了程序的多态与低偶合高内聚
+
+```go 
+var _pay pay
+//一个变量实现了接口当中所有方法，接口就可以指向这个变量
+_pay = _payment
+_pay.info()
+_pay.topay()
+```
+
+不过一般不这样使用
+
+###### 2. 自定义类型也可以实现接口
+
+在`main.go`文件中,定义两个接口
+
+```go 
+type write interface {
+    echo()
+    out()
+}
+
+type read interface {
+    scan()
+    input()
+}
+```
+
+我们来基于内置类型创建自定义类型
+
+```go 
+//自定义类型，基于内置类型
+type readwrite string
+```
+
+让自定义类型来实现上面定义的两个接口中的所有该当
+
+```go 
+//自定义类型`readwrite`实现`write`接口中的`echo()`方法
+func (this *readwrite)echo()  {
+    fmt.Println("readwrite:echo()")
+}
+
+//自定义类型`readwrite`实现`write`接口中的`out()`方法
+func (this *readwrite)out()  {
+    fmt.Println("readwrite:out()")
+}
+
+//自定义类型`readwrite`实现`read`接口中的`scan()`方法
+func (this *readwrite)scan()  {
+    fmt.Println("readwrite:scan()")
+}
+
+//自定义类型`readwrite`实现`read`接口中的`input()`方法
+func (this *readwrite)input()  {
+    fmt.Println("readwrite:input()")
+}
+```
+
+这样我们自定义的类型`readwrite`就实现了两个接口中的所有方法，在`main.go`文件中调用
+
+```go 
+var _readwrite readwrite
+_readwrite.echo()
+```
+
+> 多重继承接口，所有的方法都要实现
+
+```go 
+//多重继承格式
+type InterfaceAA interface {
+    InterfaceA
+    InterfaceB
+}
+```
+
+##### 综合案例
+
+为了巩固面向对象知识点，通过结合面向对象三大特征，综合的对面向对象的知识进行进阶
+
+> 企业项目中经常涉及到与日志存储的业务，比如针对web项目的日志存储
+
+> 比如磁盘IO操作的日志:磁盘进行数据拷贝读取一般会有读写日志,记录读取到的位置，即当前数据在磁盘的哪个碰头哪个扇区上
+
+> 比如网络请求的日志:去访问某个网站一般会有请求日志的记录，用于分析来访客户，刻画出用户的区域，访问兴趣爱好（网购时的一个典型例子,用户浏览记录写cookie）
+
+这里我们模拟一个`网络`读写日志与`磁盘`读写日志的例子
+
+定义写操作接口`write`
+
+```go 
+type write interface {
+    echo()
+    out()
+}
+```
+
+定义公共日志结构体`Log`，做为父类,并为其增加方法`writeLog()`，传递一个`write`接口类型的变量
+
+```go 
+//日志结构体
+type Log struct {
+    name string
+    content string
+    addtime int64
+}
+
+func (this *Log)writeLog(_write write)  {
+    fmt.Println(this.name+"---"+this.content)
+    _write.echo()
+    _write.out()
+}
+```
+
+定义`网络`读写结构体与`磁盘`读写结构体，继承自父类`Log`
+
+```go 
+type NetLog struct {
+    Log
+}
+
+type IOLog struct {
+    Log
+}
+```
+
+定义自定义类型，`iowrite`与`netwrite`，分别实现`write`接口中的所有方法
+
+```go 
+type iowrite string
+func (this *iowrite)echo()  {
+    fmt.Println("iowrite:echo()")
+}
+func (this *iowrite)out()  {
+    fmt.Println("iowrite:out()")
+}
+
+type netwrite string
+func (this *netwrite)echo()  {
+    fmt.Println("netwrite:echo()")
+}
+func (this *netwrite)out()  {
+    fmt.Println("netwrite:out()")
+}
+```
+
+`main.go`文件中
+
+```go 
+//父类引用指向子类对象
+//一个变量实现了接口当中所有方法，接口就可以指向这个变量
+log := &Log{
+    name:    "微信小程序支付日志",
+    content: "微信小程序支付日志内容",
+    addtime: 0,
+}
+
+var _iowrite *iowrite
+var _netwrite *netwrite 
+//writeLog的参数是一个write类型，我们这里的iowrite实现了write接口中的所有方法，所以可以传递iowrite
+//相当于write （指向）-> iowrite
+log.writeLog(_iowrite)
+
+//writeLog的参数是一个write类型，我们这里的netwrite实现了write接口中的所有方法，所以可以传递netwrite
+//相当于write （指向）-> netwrite
+log.writeLog(_netwrite)
+```
+
+> 调用者多态的一面
+
+```go 
+
+netlog := &NetLog{Log{
+    name:    "微信小程序网络支付日志",
+    content: "微信小程序网络支付日志内容",
+    addtime: 0,
+}}
+//writeLog的调用者是Log,我们的NetLog继承自Log，所以可直接调用
+netlog.writeLog(_netwrite)
+
+filelog := &IOLog{Log{
+    name:    "微信小程序文件支付日志",
+    content: "微信小程序文件支付日志内容",
+    addtime: 0,
+}}
+//writeLog的调用者是Log,我们的IOLog继承自Log，所以可直接调用
+filelog.writeLog(_iowrite)
+```
