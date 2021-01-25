@@ -26,14 +26,19 @@ tar -C /usr/local -xzf go1.15.6.linux-amd64.tar.gz
 无论使用哪种方式安装成功之后  我们都需要做环境变量的配置：
 
 `GOROOT`：安装目录（go语言安装目录）
+
 `GOPATH`：工程目录（自己工程项目目录）
+
 `GOBIN`：可执行文件目录
+
 `PATH`：将go可执行文件加入PATH中，使GO命令与我们编写的GO应用可以全局调用
 
 其中`GOPATH`包含三个目录：`bin`、`pkg`、`src`
 
 `src`目录：源文件。
+
 `pkg`目录：编译好的库文件，主要是*.a文件。
+
 `bin`目录：可执行文件。
 
 需要将上面变量配置到` .bash_profile `（家目录下）中 然后使用`source .bash_profile`即时生效。
