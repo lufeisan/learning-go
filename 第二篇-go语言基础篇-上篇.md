@@ -124,6 +124,24 @@ fmt.Println(i,j)
 i,j = j,i
 fmt.Println(i,j)
 ```
+###### 8. 全局变量和局部变量
+
+1. 全局变量定义之后可以不使用 但是局部变量则必须使用
+   
+2. 全局变量和局部变量可以重名
+
+3. 存在变量未赋值的可能的时候 代码是无法编译通过的
+
+```go 
+sex := "Female"
+if sex == "Female" {
+	outStr := "女"
+}
+
+fmt.Println(outStr)
+```
+> 上面代码因为存在判断 所以是无法编译通过
+
 
 ##### 六、变量的格式化输出
 
@@ -212,7 +230,7 @@ var index int
 //如果一个变量暂时不使用，可以赋值给他自己 
 index = index
 ```
-###### 4. `_`（下划线）是个特殊的变量名，任何赋予它的值都会被丢弃。
+###### 4. `_`（下划线）是个特殊的变量名(匿名变量)，任何赋予它的值都会被丢弃。
 
 ###### 5. 变量访问控制
 `大写字母`开头的变量是可导出的，即其它包可以读取的，是公有变量（相当于传统编程语言中`class`的`public`权限修饰符）；
@@ -245,11 +263,16 @@ iota
 
 全局唯一，编译期就已经确定的值，提高程序执行效率
 
+即使存在未使用的常量，在编译的时候也不会报错（这个和变量不一样）
+
 ###### 2. 应用场景
 
 当程序中需要引入一个在整个程序运行期，数据不发生改变时，使用常量。
 
+iota 常量计数器
+
 另一个就是枚举数据时使用，如下：
+
 ```go 
 const (
    Monday = iota
@@ -296,7 +319,7 @@ const iotaVariables4 = iota //0
 
 ```go 
 const (
-   iotaVariables5 = iota //0
+   iotaVariables5 = iota //0 iota 执行完之后 +1 
    iotaVariables6      //1
    iotaVariables7      //2
 )
@@ -326,11 +349,73 @@ const(
 
 ###### 8. const中iota与iota之间跳过
 
+> 从第一行开始，iota从0逐行加一
+
 ```go 
 const (
    iotaVariables11 = iota //0
-   iotaVariables12 = "Bobo" //Bobo
+   iotaVariables12 = "Bobo" // iota = 1 每一行iota 加一
    iotaVariables13 = iota //2
+)
+```
+
+###### 9. 常量组如不指定类型和初始化值，该类型和值和上一行的类型一致
+
+```go 
+const (
+	x int = 16
+	y // 该常量的值等于上一个常量的表达式
+	s = "abc"
+	z
+)
+fmt.Println(x,y,s,z)
+
+// 输出
+// 16 16 abc abc
+```
+
+###### 10. 你真的懂 iota 了吗？
+
+1. iota只能在常量组中使用
+
+2. 不同的const定义块互相不干扰
+
+```go 
+const (
+	Book = iota //计算器
+	Cloth //行
+	Phone
+	DeskTop
+)
+
+const (
+	Monday = iota
+	Tuesday
+	Wednesday
+	Thursday
+	Friday
+	Saturday
+	Sunday
+)
+
+print(Book, Cloth, Monday, Tuesday)
+
+// 输出
+// 0101
+```
+3. 没有表达式的常量定义复用上一行的表达式
+
+4. 从第一行开始，iota从0逐行加一
+
+```go 
+const (
+	a = iota //iota  = 0
+	b = 10 //iota = 1 每一行iota加一
+	c // c=10 , iota = 2
+	d,e = iota, iota //iota=3
+	f = iota //iota=4
+	
+	//iota代表的是这里的行数
 )
 ```
 
